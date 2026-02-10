@@ -1,4 +1,4 @@
-import { createServerSupabase } from "./supabase-server";
+import { createAdminClient } from "./supabase-server";
 
 export interface DashboardStats {
     totalRevenue: number;
@@ -10,7 +10,7 @@ export interface DashboardStats {
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
-    const supabase = await createServerSupabase();
+    const supabase = await createAdminClient();
 
     // Fetch orders from the last 30 days
     const thirtyDaysAgo = new Date();
