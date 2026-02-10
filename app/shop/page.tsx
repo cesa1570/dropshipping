@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { categories, type Product } from "../data/products";
+import { categories, type Product } from "../data/definitions";
 import ProductCard from "../components/ProductCard";
 import { Suspense } from "react";
 

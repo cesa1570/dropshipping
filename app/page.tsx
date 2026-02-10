@@ -1,6 +1,7 @@
 import HeroBanner from "./components/HeroBanner";
 import ProductCard from "./components/ProductCard";
-import { getProducts, getFeaturedProducts, categories } from "./data/products";
+import { getProducts, getFeaturedProducts } from "./data/products";
+import { categories } from "./data/definitions";
 import Link from "next/link";
 
 export const revalidate = 60; // Revalidate every 60 seconds

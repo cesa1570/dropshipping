@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Product } from "../data/products";
+import { Product } from "../data/definitions";
 import { useCart } from "../context/CartContext";
 import { useState, useEffect } from "react";
 
@@ -75,10 +75,10 @@ export default function ProductCard({ product }: { product: Product }) {
                     {product.badge && (
                         <span
                             className={`badge absolute top-3 left-3 ${product.badge === "hot"
-                                    ? "badge-hot"
-                                    : product.badge === "new"
-                                        ? "badge-new"
-                                        : "badge-sale"
+                                ? "badge-hot"
+                                : product.badge === "new"
+                                    ? "badge-new"
+                                    : "badge-sale"
                                 }`}
                         >
                             {product.badge === "hot"
@@ -128,8 +128,8 @@ export default function ProductCard({ product }: { product: Product }) {
                     <button
                         onClick={handleAdd}
                         className={`w-full mt-1 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 ${added
-                                ? "bg-neon-green text-bg-primary"
-                                : "bg-white/5 text-white hover:bg-neon-green hover:text-bg-primary"
+                            ? "bg-neon-green text-bg-primary"
+                            : "bg-white/5 text-white hover:bg-neon-green hover:text-bg-primary"
                             }`}
                     >
                         {added ? "✓ Added!" : "Add to Cart"}
