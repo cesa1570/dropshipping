@@ -1,5 +1,5 @@
 import { getProductById, getProducts } from "../../data/products";
-import ProductDetail from "./ProductDetail";
+import ProductDetailComponent from "./ProductDetailComponent";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
@@ -23,5 +23,5 @@ export default async function ProductPage({
         .filter((p) => p.category === product.category && p.id !== product.id)
         .slice(0, 4);
 
-    return <ProductDetail product={product} relatedProducts={related} />;
+    return <ProductDetailComponent product={product} relatedProducts={related} />;
 }

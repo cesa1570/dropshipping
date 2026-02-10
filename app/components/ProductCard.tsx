@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { Product } from "../data/products";
 import { useCart } from "../context/CartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProductCard({ product }: { product: Product }) {
     const { addToCart } = useCart();
     const [added, setAdded] = useState(false);
+    const [soldToday, setSoldToday] = useState(0);
+
+    // Hydration fix: only set random number on client
+    useEffect(() => {
+        setSoldToday(Math.floor(Math.random() * 50) + 10);
+    }, []);
 
     const handleAdd = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -46,9 +52,6 @@ export default function ProductCard({ product }: { product: Product }) {
         "sigma-essentials": "🐺",
         "ohio-specials": "🌽",
     };
-
-    // Random FOMO: "X sold today"
-    const soldToday = Math.floor(Math.random() * 50) + 10;
 
     return (
         <Link href={`/product/${product.id}`} className="block">
@@ -116,9 +119,11 @@ export default function ProductCard({ product }: { product: Product }) {
                         </span>
                     </div>
 
-                    <p className="text-[10px] text-neon-purple font-semibold">
-                        🔥 {soldToday} sold today
-                    </p>
+                    {soldToday > 0 && (
+                        <p className="text-[10px] text-neon-purple font-semibold animate-pulse">
+                            🔥 {soldToday} sold today
+                        </p>
+                    )}
 
                     <button
                         onClick={handleAdd}
