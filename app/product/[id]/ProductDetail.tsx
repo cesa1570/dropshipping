@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "../../context/CartContext";
-import type { Product } from "../../data/products";
+import type { Product } from "../../data/definitions";
 import ProductCard from "../../components/ProductCard";
 
 export default function ProductDetail({

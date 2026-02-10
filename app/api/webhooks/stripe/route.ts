@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { stripe } from "../../../lib/stripe";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
                 status: "paid",
                 total: (session.amount_total || 0) / 100,
                 items,
-                shipping_address: session.shipping_details?.address || null,
+                shipping_address: (session as any).shipping_details?.address || null,
                 customer_email: session.customer_email,
             });
         } catch (err) {
