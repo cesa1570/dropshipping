@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import FOMOBanner from "./components/FOMOBanner";
 import SocialProof from "./components/SocialProof";
+import BrainrotCursor from "./components/BrainrotCursor";
+import BrainrotChaos from "./components/BrainrotChaos";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,6 +35,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
         <AuthProvider>
+          <BrainrotCursor />
+          <BrainrotChaos />
           <CartProvider>
             <FOMOBanner />
             <Navbar />
