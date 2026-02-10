@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import FOMOBanner from "./components/FOMOBanner";
+import SocialProof from "./components/SocialProof";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,13 +19,8 @@ export const metadata: Metadata = {
   description:
     "The #1 brainrot merch store. Skibidi Toilet, Bombardiro Crocodilo, Sigma essentials & more. Only in Ohio. 🔥",
   keywords: [
-    "brainrot",
-    "skibidi toilet",
-    "bombardiro crocodilo",
-    "sigma",
-    "mewing",
-    "ohio",
-    "gen z merch",
+    "brainrot", "skibidi toilet", "bombardiro crocodilo", "sigma",
+    "mewing", "ohio", "gen z merch", "gen alpha",
   ],
 };
 
@@ -34,11 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
-        <CartProvider>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <FOMOBanner />
+            <Navbar />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+            <SocialProof />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

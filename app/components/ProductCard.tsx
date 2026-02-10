@@ -12,13 +12,20 @@ export default function ProductCard({ product }: { product: Product }) {
     const handleAdd = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        addToCart(product);
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.original_price,
+            image: product.images?.[0] || "",
+            category: product.category,
+        });
         setAdded(true);
         setTimeout(() => setAdded(false), 1200);
     };
 
     const discount = Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
+        ((product.original_price - product.price) / product.original_price) * 100
     );
 
     const renderStars = (rating: number) => {
@@ -33,17 +40,33 @@ export default function ProductCard({ product }: { product: Product }) {
         );
     };
 
+    const categoryEmoji: Record<string, string> = {
+        "italian-brainrot": "🇮🇹",
+        "skibidi-collection": "🚽",
+        "sigma-essentials": "🐺",
+        "ohio-specials": "🌽",
+    };
+
+    // Random FOMO: "X sold today"
+    const soldToday = Math.floor(Math.random() * 50) + 10;
+
     return (
         <Link href={`/product/${product.id}`} className="block">
             <div className="product-card group">
                 {/* Image */}
                 <div className="relative overflow-hidden aspect-square bg-bg-secondary">
-                    <div className="product-image w-full h-full flex items-center justify-center text-6xl bg-gradient-to-br from-bg-card to-bg-secondary">
-                        {product.category === "italian-brainrot" && "🇮🇹"}
-                        {product.category === "skibidi-collection" && "🚽"}
-                        {product.category === "sigma-essentials" && "🐺"}
-                        {product.category === "ohio-specials" && "🌽"}
-                    </div>
+                    {product.images && product.images.length > 0 && product.images[0] ? (
+                        <img
+                            src={product.images[0]}
+                            alt={product.name}
+                            className="product-image w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <div className="product-image w-full h-full flex items-center justify-center text-6xl bg-gradient-to-br from-bg-card to-bg-secondary">
+                            {categoryEmoji[product.category] || "🧠"}
+                        </div>
+                    )}
 
                     {/* Badge */}
                     {product.badge && (
@@ -62,6 +85,13 @@ export default function ProductCard({ product }: { product: Product }) {
                                     : `−${discount}%`}
                         </span>
                     )}
+
+                    {/* Stock warning */}
+                    {product.stock < 50 && (
+                        <span className="absolute bottom-2 left-2 text-[9px] font-bold text-neon-pink bg-neon-pink/10 px-2 py-0.5 rounded-full">
+                            Only {product.stock} left!
+                        </span>
+                    )}
                 </div>
 
                 {/* Info */}
@@ -73,7 +103,7 @@ export default function ProductCard({ product }: { product: Product }) {
                     <div className="flex items-center gap-2">
                         {renderStars(product.rating)}
                         <span className="text-[11px] text-text-secondary">
-                            ({product.reviewCount})
+                            ({product.review_count})
                         </span>
                     </div>
 
@@ -82,13 +112,17 @@ export default function ProductCard({ product }: { product: Product }) {
                             ${product.price.toFixed(2)}
                         </span>
                         <span className="text-sm text-text-secondary line-through">
-                            ${product.originalPrice.toFixed(2)}
+                            ${product.original_price.toFixed(2)}
                         </span>
                     </div>
 
+                    <p className="text-[10px] text-neon-purple font-semibold">
+                        🔥 {soldToday} sold today
+                    </p>
+
                     <button
                         onClick={handleAdd}
-                        className={`w-full mt-2 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 ${added
+                        className={`w-full mt-1 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 ${added
                                 ? "bg-neon-green text-bg-primary"
                                 : "bg-white/5 text-white hover:bg-neon-green hover:text-bg-primary"
                             }`}
